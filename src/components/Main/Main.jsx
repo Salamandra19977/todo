@@ -4,7 +4,7 @@ import style from './Main.module.scss'
 
 function Main(props) {
   return (
-    <div>Main</div>
+    <div className={style.wrapper}>Main</div>
   )
 }
 

@@ -4,7 +4,7 @@ import style from './Footer.module.scss'
 
 function Footer(props) {
   return (
-    <div>Footer</div>
+    <div className={style.wrapper}>Footer</div>
   )
 }
 
