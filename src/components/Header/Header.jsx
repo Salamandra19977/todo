@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import style from './Header.module.scss'
 import { BsCalendar3, BsCalendar4Week } from 'react-icons/bs'
 import { IoTodayOutline } from 'react-icons/io5'
+import { IoTodaySharp } from "react-icons/io5";
 
 function Header(props) {
   return (
@@ -18,7 +19,7 @@ function Header(props) {
           <span>Week</span>
         </a>
         <a href="" className={style.link}>
-          <IoTodayOutline />
+          <IoTodaySharp />
           <span>Day</span>
         </a>
       </nav>
