@@ -3,9 +3,9 @@ import React, {createContext, useState, useEffect} from 'react'
 export const ContextStore = createContext()
 
  function StoreProvider({children}) {
-    const [events, setEvents] = useState([
+    const [events, setEvents] = useState(
         JSON.parse(localStorage.getItem("events")) || []
-    ])
+    )
 
     useEffect(() => {
         localStorage.setItem("events", JSON.stringify(events))
