@@ -1,21 +1,41 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useContext} from 'react'
 import PropTypes from 'prop-types'
 import style from "./AddForm.module.scss"
+
+import {ContextStore} from "../../store/ContextStore"
 
 function AddForm(props) {
   const [title, setTitle] = useState("")
   const [date, setDate] = useState("")
   const [correct, setCorrect] = useState(false)
 
+  const titleRef = useRef(null)
+  const dateRef = useRef(null)
+  
+  let {addEvent} = useContext(ContextStore)
+  
+
+  const hadleSubmit = (e) => {
+    e.preventDefault()
+    if (correct) {
+        addEvent({title, date})
+        props.open(false)
+    }
+  }
+
+
   useEffect(() => {
+    titleRef.current.style.display = "none"
+    dateRef.current.style.display = "none"
     if (title.length < 1) {
-        console.log("Title is empty")
+        titleRef.current.style.display = "block"
     } else if (date.length < 1) {
-        console.log("Date is empty")
+        dateRef.current.style.display = "block"
     } else {
         setCorrect(true)
     }
   }, [title, date])
+
   return (
     <div className={style.wrapper}>
         <div className={style.inner}>
@@ -34,6 +54,7 @@ function AddForm(props) {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
+                <span className={style.error} ref={titleRef}>Title is empty</span>
             </div>
             <div className={style.item}>
                 <label 
@@ -49,8 +70,10 @@ function AddForm(props) {
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                 />
+                <span className={style.error} ref={dateRef}>Date is empty</span>
             </div>
-            <button className={style.button}>Add</button>
+            <button className={style.button} disabled={!correct} onClick={hadleSubmit}>Add</button>
+            <button className={style.closeButton} onClick={() => props.open(false)}>X</button>
         </div>
     </div>
   )

@@ -3,16 +3,18 @@ import './styles/generalStyle.scss'
 import Header from './components/Header/Header'
 import Main from './components/Main/Main'
 import Footer from './components/Footer/Footer'
-import AddForm from './components/AddForm/AddForm'
+import StoreProvider from './store/ContextStore'
 
 
 function App() {
   return (
     <>
-      <Header/>
-      <Main/>
-      <Footer/>
-      <AddForm/>
+      <StoreProvider>
+        <Header/>
+        <Main/>
+        <Footer/>
+      </StoreProvider>
+
     </>
   )
 }

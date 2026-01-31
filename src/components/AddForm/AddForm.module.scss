@@ -1,5 +1,16 @@
 .wrapper {
     & .inner {
+        & .closeButton {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: #fff;
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -34,6 +45,10 @@
             padding: 1rem 1rem;
             background-color: #000950;
             color: #ffffff;
+
+            &:disabled {
+                background-color: #010d67;
+            }
         }
     }
 }
