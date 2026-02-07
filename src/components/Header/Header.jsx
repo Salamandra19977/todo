@@ -4,24 +4,28 @@ import style from './Header.module.scss'
 import { BsCalendar3, BsCalendar4Week } from 'react-icons/bs'
 import { IoTodayOutline } from 'react-icons/io5'
 import { IoTodaySharp } from "react-icons/io5";
+import { NavLink } from "react-router"
 
 function Header(props) {
   return (
     <header className={style.wrapper}>
+      <NavLink to="/" className={style.logoBar}>
+          <BsCalendar3 className={style.icon} />
+          <div className='title'>RoboCalendar</div>
+      </NavLink>
       <nav className={style.navBar}>
-        <a href="" className={style.link}>Main</a>
-        <a href="" className={style.link}>
+        <NavLink to="/" className={({isActive}) => (isActive ? style.active : style.link)}>
           <BsCalendar3 />
           <span>Month</span>
-        </a>
-        <a href="" className={style.link}>
+        </NavLink>
+        <NavLink to="/week" className={({isActive}) => (isActive ? style.active : style.link)}>
           <BsCalendar4Week />
           <span>Week</span>
-        </a>
-        <a href="" className={style.link}>
+        </NavLink>
+        <NavLink to="/day" className={({isActive}) => (isActive ? style.active : style.link)}>
           <IoTodaySharp />
           <span>Day</span>
-        </a>
+        </NavLink>
       </nav>
     </header>
   )
