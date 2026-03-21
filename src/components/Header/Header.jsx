@@ -6,29 +6,40 @@ import { IoTodayOutline } from 'react-icons/io5'
 import { IoTodaySharp } from "react-icons/io5";
 import { NavLink } from "react-router"
 
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
+import { removeToken } from '../Auth/AuthReducer'
+
 function Header(props) {
-  return (
-    <header className={style.wrapper}>
-      <NavLink to="/" className={style.logoBar}>
-          <BsCalendar3 className={style.icon} />
-          <div className='title'>RoboCalendar</div>
-      </NavLink>
-      <nav className={style.navBar}>
-        <NavLink to="/" className={({isActive}) => (isActive ? style.active : style.link)}>
-          <BsCalendar3 />
-          <span>Month</span>
-        </NavLink>
-        <NavLink to="/week" className={({isActive}) => (isActive ? style.active : style.link)}>
-          <BsCalendar4Week />
-          <span>Week</span>
-        </NavLink>
-        <NavLink to="/day" className={({isActive}) => (isActive ? style.active : style.link)}>
-          <IoTodaySharp />
-          <span>Day</span>
-        </NavLink>
-      </nav>
-    </header>
-  )
+	let isAuthenticated = useSelector((state) => state.auth.token !== null)
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	let logout = () => {
+		dispatch(removeToken())
+		navigate("/login")
+	}
+	return (
+		<header className={style.wrapper}>
+			<NavLink to="/" className={style.logoBar}>
+				<BsCalendar3 className={style.icon} />
+				<div className='title'>RoboCalendar</div>
+			</NavLink>
+			<nav className={style.navBar}>
+				<NavLink to="/month" className={({ isActive }) => (isActive ? style.active : style.link)}>
+					<BsCalendar3 />
+					<span>Month</span>
+				</NavLink>
+				<NavLink to="/week" className={({ isActive }) => (isActive ? style.active : style.link)}>
+					<BsCalendar4Week />
+					<span>Week</span>
+				</NavLink>
+				<NavLink to="/day" className={({ isActive }) => (isActive ? style.active : style.link)}>
+					<IoTodaySharp />
+					<span>Day</span>
+				</NavLink>
+			</nav>
+		</header>
+	)
 }
 
 Header.propTypes = {}

@@ -2,20 +2,32 @@ import React, {useEffect} from 'react'
 import PropTypes from 'prop-types'
 import style from "./Auth.module.scss"
 import { useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
-import { registerUser, clearError } from './AuthReducer'
 
-function RegisterPage(props) {
-    const navigate = useNavigate()
+import { useDispatch, useSelector } from 'react-redux'
+import { setToken, loginUser, clearError } from './AuthReducer'
+import { data, useNavigate } from 'react-router'
+
+function LoginPage(props) {
+
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {loading, error, token} = useSelector((state) => state.auth)
+    // useEffect(() => {
+    //     if (data) {
+    //         dispatch(setToken(data.token))
+    //         navigate("/")
+    //     }
+    // }, [data])
     const {
         register,
         handleSubmit,
         formState: { errors },
         watch
     } = useForm()
+
+    let onSubmit = (data) => {
+        dispatch(loginUser(data))
+    }
 
     useEffect(() => {
         if (error) {
@@ -27,35 +39,10 @@ function RegisterPage(props) {
         }
     }, [error, token])
 
-    let onSubmit = (data) => {
-        dispatch(registerUser(data))
-    }
     return (
         <div className={style.wrapper}>
-            <h1>Register</h1>
+            <h1>Login</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="login">Login</label>
-                <input
-                    type="text"
-                    id="login"
-                    {...register("login", {
-                        required: true,
-                        minLength: {
-                            value: 3,
-                            message: "Login must be at least 3 characters"
-                        },
-                        maxLength: {
-                            value: 20,
-                            message: "Login must be at most 20 characters"
-                        },
-                        pattern: {
-                            value: /^[a-zA-Z0-9]+$/,
-                            message: "Login must be only letters and numbers"
-                        }
-                    })}
-                />
-                <span>{errors.login?.message}</span>
-                <br />
                 <label htmlFor="email">Email</label>
                 <input 
                     type="email" 
@@ -92,28 +79,12 @@ function RegisterPage(props) {
                 />
                 <span>{errors.password?.message}</span>
                 <br />
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <input 
-                    type="password" 
-                    id='confirmPassword'
-                    {...register("confirmPassword", {
-                        required: true,
-                        validate: (value) => {
-                            if ( value !== watch("password")) {
-                                return "Passwords do not match"
-                            }
-                        }
-                       
-                    })} 
-                />
-                <span>{errors.confirmPassword?.message}</span>
-                <br />
-                <button className={style.btn}>Register</button>
+                <button className={style.btn}>Login</button>
             </form>
         </div>
     )
 }
 
-RegisterPage.propTypes = {}
+LoginPage.propTypes = {}
 
-export default RegisterPage
+export default LoginPage
