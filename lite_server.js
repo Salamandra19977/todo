@@ -116,6 +116,24 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
+app.post("/add", authenticateToken, async (req, res) => {
+    const { title, date } = req.body;
+    user_id = req.user.id
+    await db.run("INSERT INTO Events (user_id, title, date) VALUES (?, ?, ?)", [user_id, title, date])
+    let result = await db.get("SELECT * FROM Events WHERE user_id = ?", [req.user.id])
+    res.send(result[0])
+})
+
+app.post("/events", authenticateToken, async (req, res) => {
+    let result = await db.get("SELECT * FROM Events WHERE user_id = ?", [req.user.id])
+    res.send(result[0])
+    if (result[0].length === 0) {
+        return res.status(404).send({error: "No events found"})
+    }
+    res.send(result[0])
+})
+
+
 app.get("/protected", authenticateToken, (req, res) => {
     res.send({ message: `Hello, user ${req.user.id}!` });
 });

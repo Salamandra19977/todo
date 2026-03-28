@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import PropTypes from 'prop-types'
 import style from "./AddForm.module.scss"
 import { useDispatch } from 'react-redux'
-import { addNewEvent  } from "../CalendarReducer"
+import { addNewEvent, closeModal  } from "../CalendarReducer"
 
 // import {ContextStore} from "../../store/ContextStore"
 
@@ -22,7 +22,7 @@ function AddForm(props) {
 		e.preventDefault()
 		if (correct) {
 			dispatch(addNewEvent({ title, date }))
-			props.open(false)
+			dispatch(closeModal())
 		}
 	}
 
@@ -76,7 +76,7 @@ function AddForm(props) {
 					<span className={style.error} ref={dateRef}>Date is empty</span>
 				</div>
 				<button className={style.button} disabled={!correct} onClick={hadleSubmit}>Add</button>
-				<button className={style.closeButton} onClick={() => props.open(false)}>X</button>
+				<button className={style.closeButton} onClick={() => dispatch(closeModal())}>X</button>
 			</div>
 		</div>
 	)

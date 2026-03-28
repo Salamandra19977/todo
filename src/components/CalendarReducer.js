@@ -17,7 +17,7 @@ const CalendarReducer = createSlice({
         openModal: (state) => {
             state.modalState = true
         },
-        closeModal: () => {
+        closeModal: (state) => {
             state.modalState = false
         },
         clearError: (state) => {
@@ -53,14 +53,14 @@ const CalendarReducer = createSlice({
 });
 
 export const addNewEvent = createAsyncThunk(
-	"auth/addNewEvent",
+	"events/addNewEvent",
 	async (data, { rejectWithValue, getState }) => {
 		try {
 			const response = await fetch("http://localhost:3000/add", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-                    Autorization: `Bearer ${getState().auth.token}`
+                    Authorization: `Bearer ${getState().auth.token}`
 				},
 				body: JSON.stringify(data)
 			})
@@ -77,14 +77,14 @@ export const addNewEvent = createAsyncThunk(
 )
 
 export const getEvents = createAsyncThunk(
-	"auth/getEvents",
+	"events/getEvents",
 	async (data, { rejectWithValue, getState }) => {
 		try {
 			const response = await fetch("http://localhost:3000/events", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-                    Autorization: `Bearer ${getState().auth.token}`
+                    Authorization: `Bearer ${getState().auth.token}`
 				}
 			})
 

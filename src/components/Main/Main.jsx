@@ -27,11 +27,11 @@ function Main(props) {
 				<FaRegCalendarPlus />
 			</button>
 			<Routes>
-				<Route path='/' element={<RegisterPage />} />
-				<Route path='/month' element={<MCalendar />} />
+				<Route path='/' element={<MCalendar />} />
 				<Route path='/day' element={<DCalendar />} />
 				<Route path='/week' element={<WCalendar />} />
 				<Route path='/login' element={<LoginPage />} />
+				<Route path='/register' element={<RegisterPage />} />
 			</Routes>
 		</div>
 	)
